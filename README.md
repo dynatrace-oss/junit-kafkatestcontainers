@@ -1,117 +1,236 @@
-# Repository Template
+<!-- markdownlint-disable-file MD033 -->
+# JUnit KafkaTestcontainers: A custom JUnit annotation for Kafka integration tests
 
-This template is the starting point for new repositories in the `dynatrace-oss` organization.
+[![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
+[![Java 17 or higher](https://img.shields.io/badge/JDK-17%2B-007396)](https://docs.oracle.com/javase/17/)
+<!-- [![Maven Central Version](https://img.shields.io/maven-central/v/<link to repo>)](https://<link to repo>) -->
+<!-- [![javadoc](https://javadoc.io/badge2/com.dynatrace.<url>/javadoc.svg)](https://javadoc.io/doc/com.dynatrace.<url>>) -->
+<!-- [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dynatrace-oss_junit-kafkatestcontainers&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dynatrace-oss_junit-kafkatestcontainers) -->
+<!-- [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dynatrace-oss_junit-kafkatestcontainers&metric=coverage)](https://sonarcloud.io/summary/new_code?id=dynatrace-oss_junit-kafkatestcontainers) -->
 
-Creating a repository in `dynatrace-oss` establishes an ongoing ownership, maintenance, and lifecycle commitment. Before a repository is published or actively used, the owning team must confirm that the repository has clear ownership, appropriate documentation, and the minimum required governance and automation in place.
+**junit-kafkatestcontainers** is a Java library by Dynatrace that simplifies Kafka integration testing through a single configurable annotation. It works in both Spring and non-Spring JUnit5 projects, locally and in CI pipelines.
 
-## Purpose
+Compared to Spring's `EmbeddedKafka`, which pins you to the Kafka client version from your Spring release and ships a minimal broker, this library runs a real Kafka broker in a Docker container via [Testcontainers](https://testcontainers.com/), so you choose the version.
 
-Use this template when creating a new repository that will live in `dynatrace-oss`.
+The annotation accepts configuration parameters, and the JUnit5 extension manages the container lifecycle for you. In a Spring context, the extension hooks into the Spring environment and resolves placeholders for both `@Value` injection and application.properties, with no additional wiring. In non-Spring projects it can be used without Spring test support.
 
-This template provides a baseline structure for:
-- repository documentation
-- contribution guidance
-- community health files
-- basic automation
-- ownership and maintenance expectations
+## Table of Contents
 
-## Required actions after repository creation
+- [Getting started](#getting-started)
+  - [First steps](#first-steps)
+  - [Environment Setup](#environment-setup)
+  - [Usage](#usage)
+  - [Configuration](#configuration)
+- [Benchmark Results](#benchmark-results)
+- [License](#license)
+- [Contributing](#contributing)
+  - [Code Style](#code-style)
+  - [Documentation](#documentation)
+  - [Static Analysis](#static-analysis)
+  - [Tests](#tests)
+  - [Pull Requests](#pull-requests)
+- [Disclaimer](#disclaimer)
 
-After creating a repository from this template, the owning team must complete the following before the repository is considered ready for active use or publication:
+## Getting Started
 
-### 1. Replace placeholder content
-Update this README to describe:
-- what the repository contains
-- who it is for
-- how it should be used
-- how contributors can get started
-- any important limitations, prerequisites, or support boundaries
+### First steps
 
-### 2. Confirm repository ownership
-Each repository must have:
-- a primary maintainer, DRI, or owning team
-- a documented support model
-- a `CODEOWNERS` file that reflects the responsible team or maintainers
+To add the dependency `com.dynatrace.junit.kafkatestcontainers` to your Maven project, use the following:
 
-Ownership must remain current over time. Repositories without durable ownership may be subject to review, restriction, or archival.
+````xml
+<dependency>
+  <groupId>com.dynatrace.junit.kafkatestcontainers</groupId>
+  <artifactId>junit-kafkatestcontainers</artifactId>
+  <version>0.1.0</version>
+</dependency>
+````
 
-### 3. Review inherited community health files
-Some community health files may be inherited from organization defaults. The owning team is responsible for reviewing them and deciding whether repository-specific versions are needed.
+To add the dependency using Gradle (with Kotlin):
 
-At minimum, review:
-- `CONTRIBUTING.md`
-- `CODE_OF_CONDUCT.md`
-- `SECURITY.md`
-- `SUPPORT.md`
+````kotlin
+testImplementation(testFixtures("com.dynatrace.junit.kafkatestcontainers:junit-kafkatestcontainers:0.1.0"))
+````
 
-If the repository has different contribution, security, or support expectations than the organization defaults, add repository-specific versions.
+### Environment Setup
 
-### 4. Confirm licensing
-Each repository must include the correct license for its contents. Do not assume the default is always appropriate. Confirm the intended license before publishing. More information on licensing can be found [here](https://docs.github.com/en/repositories/managing-your-repositorys-settings-and-features/customizing-your-repository/licensing-a-repository).
+A running Docker daemon is required. Testcontainers picks it up automatically in most setups. The two most relevant variables are:
 
-### 5. Add or validate baseline automation
-At minimum, the repository should include automation appropriate to its contents. This usually includes:
-- Markdown linting
-- validation for configuration files where applicable
-- dependency update automation
-- any language-specific test or lint workflows needed for the project
+| Environment variable                   | Description                                                                                                                                                       |
+|----------------------------------------|-------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `DOCKER_HOST`                          | Docker daemon socket. Testcontainers checks this first, then falls back to `/var/run/docker.sock`. Set it explicitly if your daemon runs on a non-default socket. |
+| `TESTCONTAINERS_HUB_IMAGE_NAME_PREFIX` | Prefix prepended to all image pulls. Use this to redirect pulls to an internal registry or mirror (e.g. `registry.example.com/dockerhub-mirror/`).                |
 
-### 6. Validate publication readiness
-Before making a repository public, confirm that:
-- the repository has a clear purpose
-- ownership is defined
-- required documentation is present
-- the support model is clear
-- secrets are not present
-- branch protection and review expectations are in place where needed
+These can also be set in `src/test/resources/testcontainers.properties` instead of as environment variables, which is useful for sharing settings across the team via version control:
 
-## Publication and support expectations
+```properties
+docker.host=tcp://localhost:2375
+hub.image.name.prefix=registry.example.com/dockerhub-mirror/
+```
 
-Repositories in `dynatrace-oss` are not automatically considered commercially supported products.
+For the full list of supported configuration options see the [Testcontainers configuration reference](https://java.testcontainers.org/features/configuration/).
 
-Unless explicitly stated otherwise, maintainers should make support expectations clear in the repository documentation. If a project is community-supported, experimental, internal-only, or provided without official product support, that should be stated plainly in the README and/or `SUPPORT.md`.
+### Usage
 
-Example language:
+#### Plain JUnit 5
 
-> This project is open source and maintained by Dynatrace contributors. It is not covered by standard Dynatrace commercial support unless explicitly stated otherwise.
+Annotate your test class and inject `KafkaContainer` as a parameter, no framework needed:
 
-## Minimum recommended repository contents
+```java
+@KafkaTestcontainers(
+    topics = @KafkaTestcontainers.Topic(name = "my-topic", partitions = 3)
+)
+class MyKafkaTest {
 
-The following should usually be present in each repository:
+    @Test
+    void myTest(KafkaContainer kafka) {
+        String bootstrapServers = kafka.getBootstrapServers();
+        // build producers/consumers using bootstrapServers
+    }
+}
+```
 
-- `README.md`
-- `LICENSE`
-- `CODEOWNERS`
-- `CONTRIBUTING.md` or inherited equivalent
-- `SECURITY.md` or inherited equivalent
-- `SUPPORT.md` or inherited equivalent
-- `AGENTS.md` or inherited equivalent 
-- issue templates
-- pull request template
-- baseline CI workflows
+The container starts once per test class and is torn down automatically. A Docker daemon must be running on the host. If multiple test methods need access, inject the `KafkaContainer` in a `@BeforeEach` instead.
 
-## Repository lifecycle
+#### Spring
 
-Creating a repository is the beginning of a lifecycle, not a one-time setup step. Repository owners are expected to maintain the repository over time, including:
-- keeping ownership information current
-- reviewing dependency and automation health
-- responding to contribution and support signals as appropriate
-- archiving or transferring the repository when it is no longer actively maintained or no longer belongs in the organization
+Combine `@KafkaTestcontainers` with `@SpringBootTest`. The broker address is injected into the Spring context under `spring.kafka.bootstrap-servers` automatically. No manual wiring needed:
 
-## AI assistant guidance
+```java
+@KafkaTestcontainers(
+    topics = @KafkaTestcontainers.Topic(name = "my-topic")
+)
+@SpringBootTest
+class MyKafkaTest {
 
-This repository includes repository-level guidance for AI coding assistants:
+    @Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServers;
+}
+```
 
-- `AGENTS.md` provides repository expectations and review guidance for agent-based coding tools
-- `.github/copilot-instructions.md` provides repository-wide instructions for GitHub Copilot
+Topic names support Spring property placeholders, so `${my.app.topic}` resolves from your test properties before the topic is created.
 
-## Repository Exemplars
+#### Migrating from `@EmbeddedKafka`
 
-Looking for some inspiration? Here are a few Dynatrace Open Source repo examples:
-- (https://github.com/dynatrace-oss/dynatrace-managed-mcp)
-- (https://github.com/dynatrace-oss/hash4j)
-- (https://github.com/dynatrace-oss/kimera)
+Replace the annotation and update the bootstrap property key. Everything else stays the same.
 
-## Questions
+**Before:**
 
-For questions about repository setup, lifecycle expectations, or placement in `dynatrace-oss`, contact the [Open Source Program](https://dynatrace.sharepoint.com/sites/DevRel/SitePages/Open-Source-Program-Office.aspx).
+```java
+@SpringBootTest
+@EmbeddedKafka(
+    topics = {"my-topic"}, partitions = 3
+)
+class MyKafkaTest {
+
+    @Value("${spring.embedded.kafka.brokers}")
+    private String bootstrapServers;
+}
+```
+
+**After:**
+
+```java
+@SpringBootTest
+@KafkaTestcontainers(
+    topics = @KafkaTestcontainers.Topic(name = "my-topic", partitions = 3)
+)
+class MyKafkaTest {
+
+    @Value("${spring.kafka.bootstrap-servers}")
+    private String bootstrapServers;
+}
+```
+
+### Configuration
+
+All parameters are optional. The annotation works with zero configuration — a broker is started with default settings and no pre-created topics.
+
+| Parameter           | Default                          | Description                                                                                                                                                                                              |
+|---------------------|----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
+| `topics`            | *(none)*                         | Topics to create before tests run. Each topic takes a `name` and an optional `partitions` count (default `1`).                                                                                           |
+| `version`           | Kafka client dependency version  | Broker version to run. Override to test against a specific or older broker version.                                                                                                                      |
+| `bootstrapProperty` | `spring.kafka.bootstrap-servers` | Spring property key under which the broker address is registered. Override when your app uses a non-default key, e.g. when multiple Kafka clusters are configured. Has no effect in plain JUnit 5 tests. |
+
+#### Pinning the broker version
+
+```java
+@KafkaTestcontainers(version = "3.7.0")
+@SpringBootTest
+class LegacyBrokerCompatibilityTest { }
+```
+
+#### Custom bootstrap property (multiple clusters)
+
+```java
+@KafkaTestcontainers(bootstrapProperty = "spring.kafka.secondary.bootstrap-servers")
+@SpringBootTest
+class SecondaryClusterTest {
+
+    @Value("${spring.kafka.secondary.bootstrap-servers}")
+    private String bootstrapServers;
+}
+```
+
+## Benchmark Results
+
+JMH benchmarks comparing `@KafkaTestcontainers` against Spring's `@EmbeddedKafka` across lifecycle cost,
+per-operation latency, and full test class runtime. Lower is better in all charts. EmbeddedKafka starts up
+significantly faster (~183 ms vs ~3800 ms); once running, operation latency is comparable for producers and
+Testcontainers is faster for consumers. With Spring context reuse, total test class runtime is nearly identical.
+
+Benchmark sources are in [`src/jmh/java/`](./src/jmh/java/) and raw results are available at
+[`benchmark_result/result.json`](./benchmark_result/result.json).
+
+<img src="./benchmark_result/lifecycle_result_graph.png" alt="Lifecycle cost bar chart (log scale): EmbeddedKafka starts 20x faster than Testcontainers (183 ms vs 3795 ms); stop and topic creation times are comparable." width="600">
+
+<img src="./benchmark_result/operation_result_graph.png" alt="Operation cost bar chart (log scale): producer send latency is identical between EmbeddedKafka and Testcontainers (~15–17 ms); Testcontainers has lower consumer receive latency at p50 (0.59 ms vs 1.78 ms) and p95 (1.19 ms vs 3.61 ms)." width="600">
+
+<img src="./benchmark_result/testclass_scenarios_result_graph.png" alt="Test class runtime bar chart: EmbeddedKafka is faster for plain JUnit (4126 ms vs 6235 ms) and Spring @DirtiesContext (8350 ms vs 18284 ms); with Spring context reuse both are nearly equal (~2068 ms vs ~2096 ms)." width="600">
+
+## License
+
+This project is licensed under [Apache-2.0 license](./LICENSE).
+
+## Contributing
+
+Contributions are welcome! Please follow these guidelines in addition to [these guidelines](https://github.com/dynatrace-oss/junit-kafkatestcontainers?tab=contributing-ov-file) before opening a pull request.
+
+### Code Style
+
+This project enforces the [Google Java Style Guide](https://google.github.io/styleguide/javaguide.html) via Checkstyle. Run `./gradlew checkstyleAll` to verify locally before pushing.
+
+- **No `System.out`** — use a logger (enforced by ForbiddenApis)
+- **Null safety** — annotate with `@org.jspecify.annotations.*`; NullAway is enabled at error severity for production code
+
+### Documentation
+
+Markdown files must pass markdownlint validation. A Docker daemon is required. Run `make markdownlint` to verify documentation locally before pushing.
+
+### Static Analysis
+
+The build runs ErrorProne and ForbiddenApis in addition to Checkstyle. Run the full check suite with:
+
+```shell
+./gradlew build buildHealth
+```
+
+### Tests
+
+All changes must be covered by tests. Run tests with:
+
+```shell
+./gradlew test 
+```
+
+### Pull Requests
+
+- Keep PRs small and focused — one concern per PR
+- Summarize what changed and why in the PR description
+
+## Disclaimer
+
+> [!WARNING]
+> This is an experimental project with limited support and provided as-is.
+> It is not covered by standard Dynatrace commercial support.
+
+For general questions or inquiries, please [open a GitHub issue](https://github.com/dynatrace-oss/junit-kafkatestcontainers/issues).

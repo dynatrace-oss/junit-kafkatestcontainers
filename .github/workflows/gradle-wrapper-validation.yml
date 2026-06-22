@@ -1,4 +1,4 @@
-name: Markdown lint
+name: "Validate Gradle Wrapper"
 
 on:
   pull_request:
@@ -9,11 +9,11 @@ on:
       - main
 
 jobs:
-  markdownlint:
+  validation:
     runs-on: ubuntu-latest
     steps:
       - name: Check out repository
         uses: actions/checkout@v7
 
-      - name: Run markdown lint
-        run: make markdownlint
+      - name: Validate wrapper
+        uses: gradle/actions/wrapper-validation@v6
