@@ -1,0 +1,41 @@
+name: Build
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+        with:
+          fetch-depth: 0
+
+      - name: Set up Java
+        uses: actions/setup-java@v5
+        with:
+          java-version: 17
+          distribution: 'temurin'
+          cache: gradle
+
+      #- name: Cache Sonar packages
+        #uses: actions/cache@v6
+        #with:
+          #path: ~/.sonar/cache
+          #key: ${{ runner.os }}-sonar
+          #restore-keys: ${{ runner.os }}-sonar
+
+      - name: Build and analyze
+        run: ./gradlew build buildHealth # sonar --info
+        #env:
+          #SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v7
+        if: always()
+        with:
+          name: 'artifact'
+          path: build/reports

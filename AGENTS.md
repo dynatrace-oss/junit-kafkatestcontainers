@@ -5,6 +5,7 @@
 This repository is a template for creating new repositories in the `dynatrace-oss` organization.
 
 Agents working in this repository should optimize for:
+
 - clear ownership
 - durable repository standards
 - minimal but useful baseline automation
@@ -51,6 +52,7 @@ Unless the task explicitly says otherwise, preserve or improve these files:
 ## Workflow guidance
 
 Before proposing changes:
+
 - check whether ownership, support, or publication expectations are affected
 - preserve review-friendly workflows
 - avoid unnecessary complexity
@@ -59,6 +61,7 @@ Before proposing changes:
 ## Pull request guidance
 
 When preparing a pull request:
+
 - summarize what changed
 - explain why the change improves the template
 - call out any new maintainer actions required after repository creation

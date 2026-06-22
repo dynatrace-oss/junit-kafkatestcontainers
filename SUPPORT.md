@@ -2,16 +2,13 @@
 
 ## Support model
 
-Describe how this repository is supported.
-
-Examples:
-- Community-supported by maintainers on a best-effort basis
-- Maintained by the owning team for internal or strategic use
-- Experimental project with limited support
+> [!WARNING]  
+> This is an experimental project with limited support and provided as-is.
 
 ## How to get help
 
 Please use GitHub Issues for:
+
 - bug reports
 - feature requests
 - general questions related to this repository

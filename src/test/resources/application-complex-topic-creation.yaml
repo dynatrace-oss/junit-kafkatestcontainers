@@ -1,0 +1,6 @@
+testcontainers:
+  kafka:
+    tables:
+      broker:
+        bootstrap-server: ${spring.kafka.bootstrap-servers}
+        topic: topic_3
