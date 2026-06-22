@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 240 240" width="240" height="240" role="img" aria-label="JKT badge">
+  <defs>
+    <linearGradient id="g3" x1="0%" x2="100%">
+      <stop offset="0%" stop-color="#0B4F76" />
+      <stop offset="100%" stop-color="#00C2FF" />
+    </linearGradient>
+    <style>
+      .mon { font-family: 'Inter', 'Poppins', system-ui; font-weight:700; font-size:92px; fill:#FFFFFF }
+      .sub { font-family: 'Inter', 'Poppins', system-ui; font-weight:500; font-size:14px; fill:#E2E8F0;  letter-spacing:0.5px }
+    </style>
+  </defs>
+  <rect width="100%" height="100%" rx="24" fill="url(#g3)" />
+  <text class="mon" x="50%" y="46%" dominant-baseline="middle" text-anchor="middle">JKT</text>
+  <text class="sub" x="50%" y="76%" text-anchor="middle">JUnit KafkaTestcontainers</text>
+</svg>

@@ -1,0 +1,8 @@
+@defaultMessage Platform forbidden API.
+
+# ---------------------------------------------------------------------------
+# JUnit 4
+# ---------------------------------------------------------------------------
+
+@defaultMessage Do not use JUnit 4, but use JUnit 5 (org.junit.jupiter.api.*) instead
+org.junit.*
