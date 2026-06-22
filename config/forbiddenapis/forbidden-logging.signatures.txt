@@ -1,0 +1,7 @@
+# ---------------------------------------------------------------------------
+# Logging Framework
+# ---------------------------------------------------------------------------
+@defaultMessage Use log4j 2.x only
+org.apache.logging.log4j.jul.**
+org.apache.log4j.** @ Use log4j 2 only (these packages are for log4j 1.x).
+java.util.logging.**
