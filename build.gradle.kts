@@ -15,6 +15,7 @@ plugins {
   alias(libs.plugins.build.health)
   alias(libs.plugins.errorprone)
   alias(libs.plugins.forbiddenapis)
+  alias(libs.plugins.jmh)
   alias(libs.plugins.sonarqube)
 }
 
@@ -27,15 +28,24 @@ dependencies {
   errorprone(libs.errorProne)
   errorprone(libs.nullaway)
 
+  jmh(platform(libs.spring.boot.bom))
+  jmh(libs.spring.boot.starter.kafka.test)
+
+  jmhImplementation(libs.spring.kafka.test)
+  jmhImplementation(platform(libs.junit.bom))
+  jmhImplementation(libs.junit.platform.engine)
+  jmhImplementation(libs.junit.platform.launcher)
+  jmhRuntimeOnly(libs.junit.jupiter.engine)
+
   testFixturesApi(libs.spring.test)
   testFixturesApi(libs.testcontainers.kafka)
 
   testFixturesCompileOnly(libs.jspecify)
 
+  testFixturesImplementation(platform(libs.junit.bom))
   testFixturesImplementation(libs.junit.jupiter.api)
   testFixturesImplementation(libs.kafka.client)
-  testFixturesImplementation(platform(libs.junit.bom))
-  testFixturesImplementation(platform(libs.spring.bom))
+  testFixturesImplementation(platform(libs.spring.boot.bom))
   testFixturesImplementation(libs.spring.beans)
   testFixturesImplementation(libs.spring.context)
   testFixturesImplementation(libs.spring.core)
@@ -48,10 +58,10 @@ dependencies {
   testImplementation(libs.docker.java.api)
   testImplementation(libs.jackson)
   testImplementation(libs.jackson.databind)
+  testImplementation(platform(libs.junit.bom))
   testImplementation(libs.junit.jupiter.params)
   testImplementation(libs.kafka.client)
-  testImplementation(platform(libs.junit.bom))
-  testImplementation(platform(libs.spring.bom))
+  testImplementation(platform(libs.spring.boot.bom))
   testImplementation(libs.spring.beans)
   testImplementation(libs.spring.boot.test)
   testImplementation(libs.spring.context)
@@ -79,6 +89,12 @@ tasks.jar {
 
 group = "com.dynatrace.oss.junit.kafkatestcontainers"
 version = "0.1.0-SNAPSHOT"
+
+jmh {
+  resultsFile = project.file("benchmark_result/result.json")
+  resultFormat = "JSON"
+  timeUnit = "ms"
+}
 
 jacoco {
   toolVersion = libs.versions.jacoco.get()
@@ -176,7 +192,8 @@ tasks.withType<JavaCompile>().configureEach {
     check("NullAway", CheckSeverity.ERROR)
     option("NullAway:AnnotatedPackages", "com.dynatrace")
     option("NullAway:JSpecifyMode", "true")
-    if (name.contains("test", ignoreCase = true) && !name.contains("fixtures", ignoreCase = true)) {
+    if ((name.contains("test", ignoreCase = true) || name.contains("jmh", ignoreCase = true))
+        && !name.contains("fixtures", ignoreCase = true)) {
       disable("NullAway")
     }
   }
