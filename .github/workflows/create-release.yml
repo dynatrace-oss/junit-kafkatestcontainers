@@ -37,8 +37,8 @@ jobs:
       - name: Upload release
         uses: softprops/action-gh-release@v1
         with:
-          files: ./build/mavencentral/${{ steps.version.outputs.version }}.zip
-          name: ${{ steps.version.outputs.version }}
-          prerelease: ${{ contains(github.ref, 'alpha') || contains(github.ref, 'beta') || contains(github.ref, 'M') || contains(github.ref, 'RC') }}
+          files: ./build/mavencentral/junit-kafkatestcontainers-${{ steps.version.outputs.version }}.zip
+          name: ${{ steps.version.outputs.title }}
+          prerelease: ${{ steps.version.outputs.prerelease }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}

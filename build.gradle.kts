@@ -258,5 +258,5 @@ tasks.register("createRepoForUploadToMavenCentral", Zip::class) {
   dependsOn(tasks.named("build"), tasks.named("publish"))
   from("$projectDir/build/mavencentral/repo")
   destinationDirectory.set(layout.buildDirectory.dir("mavencentral"))
-  archiveFileName.set("$version.zip")
+  archiveFileName.set("junit-kafkatestcontainers-$version.zip")
 }
