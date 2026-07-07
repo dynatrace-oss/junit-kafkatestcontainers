@@ -1,0 +1,53 @@
+Benchmark                                                                                                  (brokerType)    Mode   Cnt      Score     Error  Units
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll                                    embedded  sample  1301      1.920 ±   0.085  ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.00          embedded  sample            0.210            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.50          embedded  sample            1.778            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.90          embedded  sample            3.239            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.95          embedded  sample            3.612            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.99          embedded  sample            4.455            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.999         embedded  sample            6.648            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.9999        embedded  sample            6.685            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p1.00          embedded  sample            6.685            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll                              testcontainers  sample  1299      0.636 ±   0.026  ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.00    testcontainers  sample            0.178            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.50    testcontainers  sample            0.587            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.90    testcontainers  sample            1.018            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.95    testcontainers  sample            1.192            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.99    testcontainers  sample            1.518            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.999   testcontainers  sample            2.514            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p0.9999  testcontainers  sample            2.699            ms/op
+c.d.o.j.k.standalone.ConsumerPollLatencyPerformanceTest.measureConsumerPoll:measureConsumerPoll·p1.00    testcontainers  sample            2.699            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend                                    embedded  sample  1300     15.556 ±   0.066  ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.00          embedded  sample           11.895            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.50          embedded  sample           15.581            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.90          embedded  sample           16.464            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.95          embedded  sample           16.662            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.99          embedded  sample           17.268            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.999         embedded  sample           17.718            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.9999        embedded  sample           17.727            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p1.00          embedded  sample           17.727            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend                              testcontainers  sample  1297     15.571 ±   0.081  ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.00    testcontainers  sample           11.551            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.50    testcontainers  sample           15.548            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.90    testcontainers  sample           16.466            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.95    testcontainers  sample           16.728            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.99    testcontainers  sample           17.471            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.999   testcontainers  sample           26.050            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p0.9999  testcontainers  sample           26.509            ms/op
+c.d.o.j.k.standalone.ProducerSendLatencyPerformanceTest.measureProducerSend:measureProducerSend·p1.00    testcontainers  sample           26.509            ms/op
+c.d.o.j.k.junit.JUnitPerformanceTest.runTestClass                                                              embedded      ss    20   4125.606 ± 212.643  ms/op
+c.d.o.j.k.junit.JUnitPerformanceTest.runTestClass                                                        testcontainers      ss    20   6234.956 ± 107.589  ms/op
+c.d.o.j.k.spring.SpringDirtiesContextPerformanceTest.runTestClass                                              embedded      ss    20   8350.193 ± 720.318  ms/op
+c.d.o.j.k.spring.SpringDirtiesContextPerformanceTest.runTestClass                                        testcontainers      ss    20  18284.403 ± 865.140  ms/op
+c.d.o.j.k.spring.SpringNonDirtiesPerformanceTest.runTestClass                                                  embedded      ss    20   2067.540 ±  28.380  ms/op
+c.d.o.j.k.spring.SpringNonDirtiesPerformanceTest.runTestClass                                            testcontainers      ss    20   2096.356 ±  13.552  ms/op
+c.d.o.j.k.standalone.AdminClientTopicCreationPerformanceTest.measureTopicCreation                              embedded      ss    40     44.405 ±   2.980  ms/op
+c.d.o.j.k.standalone.AdminClientTopicCreationPerformanceTest.measureTopicCreation                        testcontainers      ss    40     34.396 ±   1.257  ms/op
+c.d.o.j.k.standalone.ConsumerPollThroughputPerformanceTest.measureConsumerPoll                                 embedded      ss    40      0.004 ±   0.001  ms/op
+c.d.o.j.k.standalone.ConsumerPollThroughputPerformanceTest.measureConsumerPoll                           testcontainers      ss    40      0.006 ±   0.001  ms/op
+c.d.o.j.k.standalone.ProducerSendThroughputPerformanceTest.measureProducerSend                                 embedded      ss    40      0.007 ±   0.001  ms/op
+c.d.o.j.k.standalone.ProducerSendThroughputPerformanceTest.measureProducerSend                           testcontainers      ss    40      0.011 ±   0.001  ms/op
+c.d.o.j.k.standalone.StartUpPerformanceTest.measureStartUp                                                     embedded      ss    40    183.234 ±   8.519  ms/op
+c.d.o.j.k.standalone.StartUpPerformanceTest.measureStartUp                                               testcontainers      ss    40   3794.457 ± 294.229  ms/op
+c.d.o.j.k.standalone.StopPerformanceTest.measureStop                                                           embedded      ss    40    279.631 ±  12.091  ms/op
+c.d.o.j.k.standalone.StopPerformanceTest.measureStop                                                     testcontainers      ss    40    313.057 ±  26.058  ms/op

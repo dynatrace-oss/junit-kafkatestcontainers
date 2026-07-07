@@ -11,6 +11,7 @@ error-prone-gradle = "5.1.0"
 forbiddenapis = "3.10"
 jacoco = "0.8.15"
 jackson = "2.22.1"
+jmh = "0.7.3"
 jspecify = "1.0.0"
 junit-jupiter = "6.0.1"
 kafka-client = "4.3.1"
@@ -18,7 +19,6 @@ nullaway = "0.13.7"
 snakeyaml = "2.6"
 sonarqube = "7.3.1.8318"
 spring-boot = "4.1.0"
-spring-framework = "7.0.8"
 testcontainers = "2.0.5"
 
 [libraries]
@@ -33,15 +33,18 @@ junit-bom = { module = "org.junit:junit-bom", version.ref = "junit-jupiter" }
 junit-jupiter-api = { module = "org.junit.jupiter:junit-jupiter-api" }
 junit-jupiter-engine = { module = "org.junit.jupiter:junit-jupiter-engine" }
 junit-jupiter-params = { module = "org.junit.jupiter:junit-jupiter-params" }
+junit-platform-engine = { module = "org.junit.platform:junit-platform-engine" }
 junit-platform-launcher = { module = "org.junit.platform:junit-platform-launcher" }
 kafka-client = { module = "org.apache.kafka:kafka-clients", version.ref = "kafka-client" }
 nullaway = { module = "com.uber.nullaway:nullaway", version.ref = "nullaway" }
 snakeyaml = { module = "org.yaml:snakeyaml", version.ref = "snakeyaml" }
-spring-bom = { module = "org.springframework:spring-framework-bom", version.ref = "spring-framework" }
+spring-boot-bom = { module = "org.springframework.boot:spring-boot-dependencies", version.ref = "spring-boot" }
 spring-beans = { module = "org.springframework:spring-beans" }
-spring-boot-test = { module = "org.springframework.boot:spring-boot-test", version.ref = "spring-boot" }
+spring-boot-starter-kafka-test = { module = "org.springframework.boot:spring-boot-starter-kafka-test"}
+spring-boot-test = { module = "org.springframework.boot:spring-boot-test"}
 spring-context = { module = "org.springframework:spring-context" }
 spring-core = { module = "org.springframework:spring-core" }
+spring-kafka-test = { module = "org.springframework.kafka:spring-kafka-test" }
 spring-test = { module = "org.springframework:spring-test" }
 testcontainers = { module = "org.testcontainers:testcontainers", version.ref = "testcontainers" }
 testcontainers-kafka = { module = "org.testcontainers:testcontainers-kafka", version.ref = "testcontainers" }
@@ -50,4 +53,5 @@ testcontainers-kafka = { module = "org.testcontainers:testcontainers-kafka", ver
 build-health = { id = "com.autonomousapps.dependency-analysis", version.ref="build-health-plugin" }
 errorprone = { id = "net.ltgt.errorprone", version.ref = "error-prone-gradle" }
 forbiddenapis = { id = "de.thetaphi.forbiddenapis", version.ref = "forbiddenapis" }
+jmh = { id = "me.champeau.jmh", version.ref = "jmh" }
 sonarqube = { id = "org.sonarqube", version.ref = "sonarqube" }
