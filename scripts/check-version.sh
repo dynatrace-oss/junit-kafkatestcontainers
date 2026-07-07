@@ -40,6 +40,16 @@ if [ "$BRANCH_MAJOR_MINOR_VERSION" != "$GRADLE_MAJOR_MINOR_VERSION" ]; then
   exit  1;
 fi
 
+if [[ "$GRADLE_VERSION" =~ -(alpha|beta|M|RC)[0-9]+ ]]; then
+  PRERELEASE=true
+else
+  PRERELEASE=false
+fi
+
+TITLE="JUnit Kafka Testcontainers $GRADLE_VERSION"
+
 echo "Versions matching."
 echo "version=$GRADLE_VERSION" >> "$GITHUB_OUTPUT"
+echo "prerelease=$PRERELEASE" >> "$GITHUB_OUTPUT"
+echo "title=$TITLE" >> "$GITHUB_OUTPUT"
 exit 0
