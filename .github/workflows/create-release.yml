@@ -35,10 +35,11 @@ jobs:
           GPG_PASSPHRASE: ${{ secrets.GPG_PASSPHRASE }}
 
       - name: Upload release
-        uses: softprops/action-gh-release@v1
+        uses: softprops/action-gh-release@v3
         with:
           files: ./build/mavencentral/junit-kafkatestcontainers-${{ steps.version.outputs.version }}.zip
           name: ${{ steps.version.outputs.title }}
-          prerelease: ${{ steps.version.outputs.prerelease }}
+          make_latest: ${{ steps.version.outputs.release }}
+          prerelease: ${{ steps.version.outputs.release == 'false' }}
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
