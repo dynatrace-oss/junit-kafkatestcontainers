@@ -87,7 +87,7 @@ tasks.jar {
   }
 }
 
-group = "com.dynatrace.oss.junit.kafkatestcontainers"
+group = "com.dynatrace.junit.kafkatestcontainers"
 version = "0.1.0-SNAPSHOT"
 
 jmh {
@@ -227,7 +227,7 @@ publishing {
     create<MavenPublication>("mavenJava") {
       from(components["java"])
       pom {
-        name = "com.dynatrace.oss.junit.kafkatestcontainers:junit-kafkatestcontainers"
+        name = "com.dynatrace.junit.kafkatestcontainers:junit-kafkatestcontainers"
         description = "A custom JUnit annotation for Kafka integration tests"
         url = "https://github.com/dynatrace-oss/junit-kafkatestcontainers"
         licenses {

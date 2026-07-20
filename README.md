@@ -34,11 +34,11 @@ The annotation accepts configuration parameters, and the JUnit5 extension manage
 
 ### First steps
 
-To add the dependency `com.dynatrace.oss.junit.kafkatestcontainers` to your Maven project, use the following:
+To add the dependency `com.dynatrace.junit.kafkatestcontainers` to your Maven project, use the following:
 
 ````xml
 <dependency>
-  <groupId>com.dynatrace.oss.junit.kafkatestcontainers</groupId>
+  <groupId>com.dynatrace.junit.kafkatestcontainers</groupId>
   <artifactId>junit-kafkatestcontainers</artifactId>
   <version>0.1.0</version>
 </dependency>
@@ -47,7 +47,7 @@ To add the dependency `com.dynatrace.oss.junit.kafkatestcontainers` to your Mave
 To add the dependency using Gradle (with Kotlin):
 
 ````kotlin
-testImplementation(testFixtures("com.dynatrace.oss.junit.kafkatestcontainers:junit-kafkatestcontainers:0.1.0"))
+testImplementation(testFixtures("com.dynatrace.junit.kafkatestcontainers:junit-kafkatestcontainers:0.1.0"))
 ````
 
 ### Environment Setup
