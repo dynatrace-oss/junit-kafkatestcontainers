@@ -1,3 +1,4 @@
+<!-- markdownlint-disable-file MD033 -->
 # JUnit KafkaTestcontainers: A custom JUnit annotation for Kafka integration tests
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
@@ -172,7 +173,19 @@ class SecondaryClusterTest {
 
 ## Benchmark Results
 
-<-- TODO: Add benchmark results vs Spring's embedded Kafka. -->
+JMH benchmarks comparing `@KafkaTestcontainers` against Spring's `@EmbeddedKafka` across lifecycle cost,
+per-operation latency, and full test class runtime. Lower is better in all charts. EmbeddedKafka starts up
+significantly faster (~183 ms vs ~3800 ms); once running, operation latency is comparable for producers and
+Testcontainers is faster for consumers. With Spring context reuse, total test class runtime is nearly identical.
+
+Benchmark sources are in [`src/jmh/java/`](./src/jmh/java/) and raw results are available at
+[`benchmark_result/result.json`](./benchmark_result/result.json).
+
+<img src="./benchmark_result/lifecycle_result_graph.png" alt="Lifecycle cost bar chart (log scale): EmbeddedKafka starts 20x faster than Testcontainers (183 ms vs 3795 ms); stop and topic creation times are comparable." width="600">
+
+<img src="./benchmark_result/operation_result_graph.png" alt="Operation cost bar chart (log scale): producer send latency is identical between EmbeddedKafka and Testcontainers (~15–17 ms); Testcontainers has lower consumer receive latency at p50 (0.59 ms vs 1.78 ms) and p95 (1.19 ms vs 3.61 ms)." width="600">
+
+<img src="./benchmark_result/testclass_scenarios_result_graph.png" alt="Test class runtime bar chart: EmbeddedKafka is faster for plain JUnit (4126 ms vs 6235 ms) and Spring @DirtiesContext (8350 ms vs 18284 ms); with Spring context reuse both are nearly equal (~2068 ms vs ~2096 ms)." width="600">
 
 ## License
 
