@@ -34,6 +34,9 @@ public class KafkaTestcontainersUtils {
   public static final String CONTAINER_NAME = "apache/kafka";
   public static final DockerImageName CONTAINER_IMAGE = DockerImageName.parse(CONTAINER_NAME);
 
+  private KafkaTestcontainersUtils() {
+  }
+
   public static AdminClient createAdminClient(String bootstrapServers) {
     return AdminClient.create(Map.of(
       AdminClientConfig.BOOTSTRAP_SERVERS_CONFIG, bootstrapServers

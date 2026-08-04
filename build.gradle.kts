@@ -129,6 +129,19 @@ sonarqube {
     property("sonar.projectKey", "dynatrace-oss_junit-kafkatestcontainers")
     property("sonar.organization", "dynatrace-oss")
     property("sonar.host.url", "https://sonarcloud.io")
+    property("sonar.sources", "src/testFixtures/java")
+    property(
+      "sonar.java.binaries",
+      "${layout.buildDirectory.get()}/classes/java/testFixtures",
+    )
+    property(
+      "sonar.java.libraries",
+      configurations["testFixturesCompileClasspath"].resolve().joinToString(",") { it.absolutePath },
+    )
+    property(
+      "sonar.coverage.jacoco.xmlReportPaths",
+      "${layout.buildDirectory.get()}/reports/jacoco/test/jacocoTestReport.xml",
+    )
   }
 }
 
@@ -237,8 +250,11 @@ tasks.named<CheckForbiddenApis>("forbiddenApisTest") {
   signaturesFiles += rootProject.files("config/forbiddenapis/forbidden.signatures.TEST.txt")
 }
 
-tasks.withType<JacocoReport> {
+tasks.named<JacocoReport>("jacocoTestReport") {
   dependsOn(tasks.named("test"))
+  classDirectories.setFrom(files(sourceSets["testFixtures"].output.classesDirs))
+  sourceDirectories.setFrom(files(sourceSets["testFixtures"].java.srcDirs))
+  executionData.setFrom(fileTree(layout.buildDirectory) { include("jacoco/test.exec") })
   reports {
     xml.required.set(true)
     csv.required.set(true)

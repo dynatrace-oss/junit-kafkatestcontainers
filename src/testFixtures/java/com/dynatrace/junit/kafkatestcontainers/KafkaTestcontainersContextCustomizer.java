@@ -47,6 +47,7 @@ public class KafkaTestcontainersContextCustomizer implements ContextCustomizer {
   }
 
   @Override
+  @SuppressWarnings("java:S2095")
   public void customizeContext(ConfigurableApplicationContext context, MergedContextConfiguration mergedConfig) {
     KafkaContainer kafkaContainer = createContainerObject(annotation);
     kafkaContainer.start();

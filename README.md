@@ -8,8 +8,8 @@
 [![Java 17 or higher](https://img.shields.io/badge/JDK-17%2B-007396)](https://docs.oracle.com/javase/17/)
 <!-- [![Maven Central Version](https://img.shields.io/maven-central/v/<link to repo>)](https://<link to repo>) -->
 <!-- [![javadoc](https://javadoc.io/badge2/com.dynatrace.<url>/javadoc.svg)](https://javadoc.io/doc/com.dynatrace.<url>>) -->
-<!-- [![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=dynatrace-oss_junit-kafkatestcontainers&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dynatrace-oss_junit-kafkatestcontainers) -->
-<!-- [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dynatrace-oss_junit-kafkatestcontainers&metric=coverage)](https://sonarcloud.io/summary/new_code?id=dynatrace-oss_junit-kafkatestcontainers) -->
+[![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=dynatrace-oss_junit-kafkatestcontainers&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dynatrace-oss_junit-kafkatestcontainers)
+[![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dynatrace-oss_junit-kafkatestcontainers&metric=coverage)](https://sonarcloud.io/summary/new_code?id=dynatrace-oss_junit-kafkatestcontainers)
 
 **junit-kafkatestcontainers** is a Java library that simplifies Kafka integration testing through a single configurable annotation. It works in both Spring and non-Spring JUnit5 projects, locally and in CI pipelines.
 
