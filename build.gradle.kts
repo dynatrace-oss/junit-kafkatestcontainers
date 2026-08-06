@@ -108,7 +108,7 @@ tasks.jar {
 }
 
 group = "com.dynatrace.junit.kafkatestcontainers"
-version = "0.1.0-SNAPSHOT"
+version = "0.2.0-SNAPSHOT"
 
 checkstyle {
   toolVersion = libs.versions.checkstyle.get()
