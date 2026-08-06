@@ -24,6 +24,7 @@ The annotation accepts configuration parameters, and the JUnit5 extension manage
   - [Usage](#usage)
   - [Configuration](#configuration)
 - [Benchmark Results](#benchmark-results)
+- [Verifying Release Artifacts](#verifying-release-artifacts)
 - [License](#license)
 - [Contributing](#contributing)
   - [Code Style](#code-style)
@@ -188,6 +189,17 @@ Benchmark sources are in [`src/jmh/java/`](./src/jmh/java/) and raw results are 
 <img src="./benchmark_result/operation_result_graph.png" alt="Operation cost bar chart (log scale): producer send latency is identical between EmbeddedKafka and Testcontainers (~15–17 ms); Testcontainers has lower consumer receive latency at p50 (0.59 ms vs 1.78 ms) and p95 (1.19 ms vs 3.61 ms)." width="600">
 
 <img src="./benchmark_result/testclass_scenarios_result_graph.png" alt="Test class runtime bar chart: EmbeddedKafka is faster for plain JUnit (4126 ms vs 6235 ms) and Spring @DirtiesContext (8350 ms vs 18284 ms); with Spring context reuse both are nearly equal (~2068 ms vs ~2096 ms)." width="600">
+
+## Verifying Release Artifacts
+
+You can verify release artifacts with [this key](https://keys.openpgp.org/search?q=CE49CDB72D85CD25) using the commands below.
+
+```bash
+# Import the key
+gpg --keyserver hkps://keys.openpgp.org --recv-keys CE49CDB72D85CD25 # -> Michael Koepf (Dynatrace, Inc.) <michael.koepf@dynatrace.com>
+# Verify the chosen artifact
+gpg --verify <artifact to be verified>.jar.asc <artifact to be verified>.jar # -> gpg: Good signature from "Michael Koepf (Dynatrace, Inc.) <michael.koepf@dynatrace.com>"
+```
 
 ## License
 
