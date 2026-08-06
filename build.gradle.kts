@@ -255,7 +255,7 @@ publishing {
       from(components["java"])
       pom {
         name = "com.dynatrace.junit.kafkatestcontainers:junit-kafkatestcontainers"
-        description = "A custom JUnit annotation for Kafka integration tests"
+        description = "A JUnit extension for Kafka integration tests"
         url = "https://github.com/dynatrace-oss/junit-kafkatestcontainers"
         licenses {
           license {
