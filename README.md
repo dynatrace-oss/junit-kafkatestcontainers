@@ -6,8 +6,7 @@
 
 [![License](https://img.shields.io/badge/License-Apache%202.0-blue.svg)](https://opensource.org/licenses/Apache-2.0)
 [![Java 17 or higher](https://img.shields.io/badge/JDK-17%2B-007396)](https://docs.oracle.com/javase/17/)
-<!-- [![Maven Central Version](https://img.shields.io/maven-central/v/<link to repo>)](https://<link to repo>) -->
-<!-- [![javadoc](https://javadoc.io/badge2/com.dynatrace.<url>/javadoc.svg)](https://javadoc.io/doc/com.dynatrace.<url>>) -->
+![Maven Central Version](https://img.shields.io/maven-central/v/com.dynatrace.junit.kafkatestcontainers/junit-kafkatestcontainers)
 [![Quality gate status](https://sonarcloud.io/api/project_badges/measure?project=dynatrace-oss_junit-kafkatestcontainers&metric=alert_status)](https://sonarcloud.io/summary/new_code?id=dynatrace-oss_junit-kafkatestcontainers)
 [![Coverage](https://sonarcloud.io/api/project_badges/measure?project=dynatrace-oss_junit-kafkatestcontainers&metric=coverage)](https://sonarcloud.io/summary/new_code?id=dynatrace-oss_junit-kafkatestcontainers)
 
