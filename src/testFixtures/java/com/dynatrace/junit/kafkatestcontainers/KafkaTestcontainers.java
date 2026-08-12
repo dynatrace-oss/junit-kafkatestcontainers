@@ -96,6 +96,13 @@ public @interface KafkaTestcontainers {
   String version() default "";
 
   /**
+   * Default partition count applied to every topic that does not specify its own {@link Topic#partitions()}.
+   * Individual topics can override this value by setting {@link Topic#partitions()} to a positive number.
+   * Topics that are auto-created by the tests will also rely on the default partition count
+   */
+  int partitions() default 1;
+
+  /**
    * Declares a Kafka topic to be created in the container before the tests run.
    * Topic names support Spring property placeholders (e.g. {@code ${my.topic.name}}) when used in a
    * Spring test context; in plain JUnit 5 tests the name is used as-is without any resolution.
@@ -103,6 +110,10 @@ public @interface KafkaTestcontainers {
   @interface Topic {
     String name();
 
-    int partitions() default 1;
+    /**
+     * Partition count for this topic. When {@code 0} (the default), the value is inherited from
+     * {@link KafkaTestcontainers#partitions()}. Set to a positive number to override for this topic.
+     */
+    int partitions() default 0;
   }
 }
