@@ -150,9 +150,25 @@ All parameters are optional. The annotation works with zero configuration — a 
 
 | Parameter           | Default                          | Description                                                                                                                                                                                              |
 |---------------------|----------------------------------|----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|
-| `topics`            | *(none)*                         | Topics to create before tests run. Each topic takes a `name` and an optional `partitions` count (default `1`).                                                                                           |
+| `topics`            | *(none)*                         | Topics to create before tests run. Each topic takes a `name` and an optional `partitions` count. Omitting `partitions` on a topic inherits the annotation-level `partitions` value.                      |
+| `partitions`        | `1`                              | Default partition count for all topics. Applied to explicitly created topics that omit their own `partitions`, and set as the broker's `num.partitions` so auto-created topics use the same default.     |
 | `version`           | Kafka client dependency version  | Broker version to run. Override to test against a specific or older broker version.                                                                                                                      |
 | `bootstrapProperty` | `spring.kafka.bootstrap-servers` | Spring property key under which the broker address is registered. Override when your app uses a non-default key, e.g. when multiple Kafka clusters are configured. Has no effect in plain JUnit 5 tests. |
+
+#### Setting a default partition count
+
+Apply a default to all topics at once. Individual topics can override it; omitting `partitions` on a topic inherits the annotation-level value. The same value is also configured as the broker's `num.partitions`, so auto-created topics follow the same default:
+
+```java
+@KafkaTestcontainers(
+    partitions = 3,
+    topics = {
+        @KafkaTestcontainers.Topic(name = "high-volume"),   // → 3 partitions (inherited)
+        @KafkaTestcontainers.Topic(name = "commands", partitions = 1) // → 1 partition (override)
+    }
+)
+class MyKafkaTest { }
+```
 
 #### Pinning the broker version
 

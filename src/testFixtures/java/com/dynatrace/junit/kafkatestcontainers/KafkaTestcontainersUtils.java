@@ -43,13 +43,20 @@ public class KafkaTestcontainersUtils {
     ));
   }
 
+  @SuppressWarnings("java:S2095")
   public static KafkaContainer createContainerObject(KafkaTestcontainers annotation) {
     String version = annotation.version();
     if (version.isBlank()) {
       version = DEFAULT_VERSION;
     }
 
-    return new KafkaContainer(CONTAINER_IMAGE.withTag(version));
+    if (annotation.partitions() < 0) {
+      throw new IllegalArgumentException(
+        "partitions must not be negative, but was: " + annotation.partitions()
+      );
+    }
+    return new KafkaContainer(CONTAINER_IMAGE.withTag(version))
+      .withEnv("KAFKA_NUM_PARTITIONS", String.valueOf(annotation.partitions()));
   }
 
   public static void createTopics(
@@ -59,11 +66,20 @@ public class KafkaTestcontainersUtils {
     if (annotation.topics().length == 0) {
       return;
     }
+    int defaultPartitions = annotation.partitions();
     List<NewTopic> newTopicList = Arrays.stream(annotation.topics())
-                                        .map(topic -> new NewTopic(
-                                          nameResolver.apply(topic.name()), topic.partitions(),
-                                          (short) 1
-                                        ))
+                                        .map(topic -> {
+                                          if (topic.partitions() < 0) {
+                                            throw new IllegalArgumentException(
+                                              "Topic '" + topic.name() + "' partitions must not be negative, but was: " + topic.partitions()
+                                            );
+                                          }
+                                          return new NewTopic(
+                                            nameResolver.apply(topic.name()),
+                                            topic.partitions() > 0 ? topic.partitions() : defaultPartitions,
+                                            (short) 1
+                                          );
+                                        })
                                         .toList();
     try (AdminClient client = createAdminClient(bootstrapServers)) {
       client.createTopics(newTopicList).all().get();
