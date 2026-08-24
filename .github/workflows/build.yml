@@ -22,14 +22,19 @@ jobs:
           cache: gradle
 
       - name: Cache Sonar packages
+        if: github.actor != 'dependabot[bot]'
         uses: actions/cache@v6
         with:
           path: ~/.sonar/cache
           key: ${{ runner.os }}-sonar
           restore-keys: ${{ runner.os }}-sonar
 
-      - name: Build and analyze
-        run: ./gradlew build buildHealth sonar --info
+      - name: Build
+        run: ./gradlew build buildHealth --info
+
+      - name: Analyze
+        if: github.actor != 'dependabot[bot]'
+        run: ./gradlew sonar --info
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
 
