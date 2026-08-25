@@ -21,7 +21,7 @@ lz4 = "1.11.1"
 nullaway = "0.13.8"
 plexus-utils = "3.6.1"
 snakeyaml = "2.6"
-sonarqube = "7.3.1.8318"
+sonarqube = "7.4.0.8496"
 spring-boot = "4.1.0"
 testcontainers = "2.0.5"
 
