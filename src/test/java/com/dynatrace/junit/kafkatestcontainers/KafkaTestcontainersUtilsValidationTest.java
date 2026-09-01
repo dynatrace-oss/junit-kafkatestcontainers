@@ -57,6 +57,9 @@ class KafkaTestcontainersUtilsValidationTest {
         if ("version".equals(method.getName())) {
           return "";
         }
+        if ("envVars".equals(method.getName())) {
+          return new KafkaTestcontainers.EnvVar[0];
+        }
         if ("annotationType".equals(method.getName())) {
           return KafkaTestcontainers.class;
         }

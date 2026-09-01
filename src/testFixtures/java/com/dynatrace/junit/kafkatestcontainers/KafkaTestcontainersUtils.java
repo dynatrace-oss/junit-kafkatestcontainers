@@ -55,8 +55,12 @@ public class KafkaTestcontainersUtils {
         "partitions must not be negative, but was: " + annotation.partitions()
       );
     }
-    return new KafkaContainer(CONTAINER_IMAGE.withTag(version))
+    KafkaContainer container = new KafkaContainer(CONTAINER_IMAGE.withTag(version))
       .withEnv("KAFKA_NUM_PARTITIONS", String.valueOf(annotation.partitions()));
+    for (KafkaTestcontainers.EnvVar envVar : annotation.envVars()) {
+      container = container.withEnv(envVar.name(), envVar.value());
+    }
+    return container;
   }
 
   public static void createTopics(
