@@ -103,10 +103,12 @@ public @interface KafkaTestcontainers {
   int partitions() default 1;
 
   /**
-   * Declares a Kafka topic to be created in the container before the tests run.
-   * Topic names support Spring property placeholders (e.g. {@code ${my.topic.name}}) when used in a
-   * Spring test context; in plain JUnit 5 tests the name is used as-is without any resolution.
+   * Additional environment variables to pass to the Kafka container.
+   * These are applied after the library's own settings (such as {@code KAFKA_NUM_PARTITIONS}),
+   * so user-supplied values take precedence and can override library-managed variables.
    */
+  EnvVar[] envVars() default {};
+
   @interface Topic {
     String name();
 
@@ -115,5 +117,11 @@ public @interface KafkaTestcontainers {
      * {@link KafkaTestcontainers#partitions()}. Set to a positive number to override for this topic.
      */
     int partitions() default 0;
+  }
+
+  @interface EnvVar {
+    String name();
+
+    String value();
   }
 }

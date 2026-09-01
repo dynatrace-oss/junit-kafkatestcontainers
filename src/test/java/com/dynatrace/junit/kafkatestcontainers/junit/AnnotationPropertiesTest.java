@@ -53,13 +53,28 @@ public class AnnotationPropertiesTest {
         .contains(currentClientVersion);
     }
 
+    @Test
+    void onlyDefaultEnvVarSet(KafkaContainer kafkaContainer) {
+      assertThat(kafkaContainer.getEnvMap())
+        .containsEntry("KAFKA_NUM_PARTITIONS", "1")
+        .doesNotContainKey(CustomProperties.CUSTOM_ENV_VAR_NAME);
+    }
+
   }
 
   @Nested
-  @KafkaTestcontainers(version = CustomProperties.CUSTOM_KAFKA_BROKER_VERSION)
+  @KafkaTestcontainers(
+    version = CustomProperties.CUSTOM_KAFKA_BROKER_VERSION,
+    envVars = @KafkaTestcontainers.EnvVar(
+      name = CustomProperties.CUSTOM_ENV_VAR_NAME,
+      value = CustomProperties.CUSTOM_ENV_VAR_VALUE
+    )
+  )
   class CustomProperties {
 
     public static final String CUSTOM_KAFKA_BROKER_VERSION = "3.9.2";
+    public static final String CUSTOM_ENV_VAR_NAME = "KAFKA_LOG_RETENTION_MS";
+    public static final String CUSTOM_ENV_VAR_VALUE = "100";
 
     @Test
     void shouldBeCustomVersion(KafkaContainer kafkaContainer) {
@@ -67,6 +82,40 @@ public class AnnotationPropertiesTest {
       assertThat(sut)
         .isPresent()
         .contains(CUSTOM_KAFKA_BROKER_VERSION);
+    }
+
+    @Test
+    void defaultAndCustomEnvVarsPresent(KafkaContainer kafkaContainer) {
+      assertThat(kafkaContainer.getEnvMap())
+        .containsEntry("KAFKA_NUM_PARTITIONS", "1")
+        .containsEntry(CUSTOM_ENV_VAR_NAME, CUSTOM_ENV_VAR_VALUE);
+    }
+
+  }
+
+  @Nested
+  @KafkaTestcontainers(
+    envVars = @KafkaTestcontainers.EnvVar(name = "KAFKA_NUM_PARTITIONS", value = "5")
+  )
+  class EnvVarOverridesDefaultPartitionsTest {
+
+    @Test
+    void envVarOverridesLibraryPartitions(KafkaContainer kafkaContainer) {
+      assertThat(kafkaContainer.getEnvMap()).containsEntry("KAFKA_NUM_PARTITIONS", "5");
+    }
+
+  }
+
+  @Nested
+  @KafkaTestcontainers(
+    partitions = 3,
+    envVars = @KafkaTestcontainers.EnvVar(name = "KAFKA_NUM_PARTITIONS", value = "7")
+  )
+  class EnvVarOverridesExplicitPartitionsTest {
+
+    @Test
+    void envVarOverridesExplicitPartitions(KafkaContainer kafkaContainer) {
+      assertThat(kafkaContainer.getEnvMap()).containsEntry("KAFKA_NUM_PARTITIONS", "7");
     }
 
   }
