@@ -16,6 +16,7 @@
 
 package com.dynatrace.junit.kafkatestcontainers.junit;
 
+import static com.dynatrace.junit.kafkatestcontainers.KafkaTestcontainersUtils.DEFAULT_VERSION;
 import static org.assertj.core.api.Assertions.assertThat;
 
 import com.dynatrace.junit.kafkatestcontainers.KafkaTestcontainers;
@@ -23,7 +24,6 @@ import com.dynatrace.junit.kafkatestcontainers.TestHelper;
 import java.util.Optional;
 import java.util.Set;
 import org.apache.kafka.clients.admin.AdminClient;
-import org.apache.kafka.common.utils.AppInfoParser;
 import org.junit.jupiter.api.Nested;
 import org.junit.jupiter.api.Test;
 import org.testcontainers.kafka.KafkaContainer;
@@ -44,7 +44,7 @@ public class AnnotationPropertiesTest {
 
     @Test
     void shouldBeDefaultVersion(KafkaContainer kafkaContainer) {
-      String currentClientVersion = AppInfoParser.getVersion();
+      String currentClientVersion = DEFAULT_VERSION;
 
       Optional<String> sut = TestHelper.findKafkaVersion(kafkaContainer.getContainerId());
 

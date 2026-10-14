@@ -24,13 +24,12 @@ import java.util.function.UnaryOperator;
 import org.apache.kafka.clients.admin.AdminClient;
 import org.apache.kafka.clients.admin.AdminClientConfig;
 import org.apache.kafka.clients.admin.NewTopic;
-import org.apache.kafka.common.utils.AppInfoParser;
 import org.testcontainers.kafka.KafkaContainer;
 import org.testcontainers.utility.DockerImageName;
 
 public class KafkaTestcontainersUtils {
 
-  public static final String DEFAULT_VERSION = AppInfoParser.getVersion();
+  public static final String DEFAULT_VERSION = "4.3.1";
   public static final String CONTAINER_NAME = "apache/kafka";
   public static final DockerImageName CONTAINER_IMAGE = DockerImageName.parse(CONTAINER_NAME);
 
