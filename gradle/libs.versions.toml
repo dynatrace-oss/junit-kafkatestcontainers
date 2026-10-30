@@ -22,7 +22,7 @@ nullaway = "0.14.2"
 plexus-utils = "3.6.1"
 snakeyaml = "2.7"
 sonarqube = "7.5.0.8588"
-spring-boot = "4.1.1"
+spring-boot = "4.1.2"
 testcontainers = "2.0.5"
 
 [libraries]
